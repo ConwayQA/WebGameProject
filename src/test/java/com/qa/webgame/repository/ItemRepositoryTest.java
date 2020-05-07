@@ -57,9 +57,11 @@ public class ItemRepositoryTest {
 
     @Test    
     public void readItemByIdTest() {       
-         Item item = entityManager.persistAndFlush(testItem); 
-         Item testItem = (repo.findById(item.getItemId()).get());   
-         assertTrue(testItem.equals(item));
-        }
+        Item item = entityManager.persistAndFlush(testItem); 
+        Item testItem = (repo.findById(item.getItemId()).get());   
+        assertTrue(testItem.equals(item));
+    }
+
+
 
 }
