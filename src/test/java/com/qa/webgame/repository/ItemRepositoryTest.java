@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.qa.webgame.domain.Item;
-import com.qa.webgame.dto.ItemDTO;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,12 +38,6 @@ public class ItemRepositoryTest {
 
     private Item testItemWithId;
 
-    private ItemDTO testItemDTO;
-
-    private ItemDTO mapToDTO(Item item){
-        return this.mapper.map(item, ItemDTO.class);
-    }
-
     @Before
     public void setUp(){
         this.itemList = new ArrayList<>();
@@ -52,7 +45,6 @@ public class ItemRepositoryTest {
         this.itemList.add(testItem);
         this.testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties());
         this.testItemWithId.setItemId(id);
-        this.testItemDTO = mapToDTO(testItemWithId);
     }
 
     @Test    
