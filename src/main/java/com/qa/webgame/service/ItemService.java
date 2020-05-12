@@ -49,7 +49,7 @@ public class ItemService {
         update.setChance(item.getChance());
         update.setDescription(item.getDescription());
         update.setProperties(item.getProperties());
-        Item tempItem = this.repo.save(item);
+        Item tempItem = this.repo.save(update);
         return this.mapToDTO(tempItem);
     }
 
