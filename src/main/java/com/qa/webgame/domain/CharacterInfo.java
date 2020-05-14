@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name = "character_info")
-public class Character {
+public class CharacterInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class Character {
     @OneToMany(mappedBy = "character")
     private Set<Inventory> inventory;
 
-    public Character() {
+    public CharacterInfo() {
     }
 
-    public Character(Long health, Long experience, Long level, Long mana) {
+    public CharacterInfo(Long health, Long experience, Long level, Long mana) {
         this.health = health;
         this.experience = experience;
         this.level = level;
@@ -96,7 +96,7 @@ public class Character {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Character other = (Character) obj;
+        CharacterInfo other = (CharacterInfo) obj;
         if (characterId == null) {
             if (other.characterId != null)
                 return false;

@@ -2,7 +2,7 @@ package com.qa.webgame.controller;
 
 import java.util.List;
 
-import com.qa.webgame.domain.Character;
+import com.qa.webgame.domain.CharacterInfo;
 import com.qa.webgame.dto.CharacterDTO;
 import com.qa.webgame.service.CharacterService;
 
@@ -27,7 +27,7 @@ public class CharacterController {
     }
 
     @PostMapping("/createCharacter")
-    public ResponseEntity<CharacterDTO> createCharacter(@RequestBody Character character){
+    public ResponseEntity<CharacterDTO> createCharacter(@RequestBody CharacterInfo character){
         return new ResponseEntity<CharacterDTO>(this.service.createCharacter(character), HttpStatus.CREATED);
     }
 
@@ -44,7 +44,7 @@ public class CharacterController {
     }
 
     @PutMapping("/updateCharacter/{id}")
-    public ResponseEntity<CharacterDTO> updateCharacter(@PathVariable Long id, @RequestBody Character character){
+    public ResponseEntity<CharacterDTO> updateCharacter(@PathVariable Long id, @RequestBody CharacterInfo character){
         return ResponseEntity.ok(this.service.updateCharacter(id, character));
     }
 }

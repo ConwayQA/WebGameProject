@@ -1,40 +1,16 @@
-package com.qa.webgame.domain;
+package com.qa.webgame.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+public class InventoryDTO {
 
-@Entity
-@Table (name = "inventory_items")
-public class Inventory {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "inventory_id")
     private Long inventoryId;
-
-    @ManyToOne
-    @JoinColumn(name = "character_id")
-    private CharacterInfo character;
-
-    @ManyToMany
-    @JoinColumn(name = "item_id")
-    private Item item;
-
+    private ItemDTO item;
     private Long position;
     private Long charges;
 
-    public Inventory() {
+    public InventoryDTO() {
     }
 
-    public Inventory(CharacterInfo character, Item item, Long position, Long charges) {
-        this.character = character;
+    public InventoryDTO(ItemDTO item, Long position, Long charges) {
         this.item = item;
         this.position = position;
         this.charges = charges;
@@ -48,21 +24,14 @@ public class Inventory {
         this.inventoryId = inventoryId;
     }
 
-    public CharacterInfo getCharacter() {
-        return character;
-    }
-
-    public void setCharacter(CharacterInfo character) {
-        this.character = character;
-    }
-
-    public Item getItem() {
+    public ItemDTO getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(ItemDTO item) {
         this.item = item;
     }
+
     public Long getPosition() {
         return position;
     }
@@ -83,7 +52,6 @@ public class Inventory {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((character == null) ? 0 : character.hashCode());
         result = prime * result + ((charges == null) ? 0 : charges.hashCode());
         result = prime * result + ((inventoryId == null) ? 0 : inventoryId.hashCode());
         result = prime * result + ((item == null) ? 0 : item.hashCode());
@@ -99,12 +67,7 @@ public class Inventory {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Inventory other = (Inventory) obj;
-        if (character == null) {
-            if (other.character != null)
-                return false;
-        } else if (!character.equals(other.character))
-            return false;
+        InventoryDTO other = (InventoryDTO) obj;
         if (charges == null) {
             if (other.charges != null)
                 return false;
@@ -127,5 +90,5 @@ public class Inventory {
             return false;
         return true;
     }
-
+    
 }

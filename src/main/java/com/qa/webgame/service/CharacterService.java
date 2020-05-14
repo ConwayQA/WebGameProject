@@ -3,7 +3,7 @@ package com.qa.webgame.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.qa.webgame.domain.Character;
+import com.qa.webgame.domain.CharacterInfo;
 import com.qa.webgame.dto.CharacterDTO;
 import com.qa.webgame.exceptions.CharacterNotFoundException;
 import com.qa.webgame.repository.CharacterRepository;
@@ -24,7 +24,7 @@ public class CharacterService {
         this.mapper = mapper;
     }
 
-    private CharacterDTO mapToDTO(Character character){
+    private CharacterDTO mapToDTO(CharacterInfo character){
         return this.mapper.map(character, CharacterDTO.class);
     }
 
@@ -32,23 +32,23 @@ public class CharacterService {
         return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
-    public CharacterDTO createCharacter(Character character){
-        Character tempCharacter = this.repo.save(character);
+    public CharacterDTO createCharacter(CharacterInfo character){
+        CharacterInfo tempCharacter = this.repo.save(character);
         return this.mapToDTO(tempCharacter);
     }
 
     public CharacterDTO findCharacterById(Long id){
-        Character tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
         return this.mapToDTO(tempCharacter);
     }
 
-    public CharacterDTO updateCharacter(Long id, Character character){
-        Character update = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+    public CharacterDTO updateCharacter(Long id, CharacterInfo character){
+        CharacterInfo update = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
         update.setExperience(character.getExperience());
         update.setHealth(character.getHealth());
         update.setLevel(character.getLevel());
         update.setMana(character.getMana());
-        Character tempCharacter = this.repo.save(update);
+        CharacterInfo tempCharacter = this.repo.save(update);
         return this.mapToDTO(tempCharacter);
     }
 
