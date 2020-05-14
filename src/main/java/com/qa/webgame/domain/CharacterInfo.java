@@ -76,6 +76,14 @@ public class CharacterInfo {
         this.mana = mana;
     }
 
+    public Set<Inventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Set<Inventory> inventory) {
+        this.inventory = inventory;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -83,6 +91,7 @@ public class CharacterInfo {
         result = prime * result + ((characterId == null) ? 0 : characterId.hashCode());
         result = prime * result + ((experience == null) ? 0 : experience.hashCode());
         result = prime * result + ((health == null) ? 0 : health.hashCode());
+        result = prime * result + ((inventory == null) ? 0 : inventory.hashCode());
         result = prime * result + ((level == null) ? 0 : level.hashCode());
         result = prime * result + ((mana == null) ? 0 : mana.hashCode());
         return result;
@@ -112,6 +121,11 @@ public class CharacterInfo {
                 return false;
         } else if (!health.equals(other.health))
             return false;
+        if (inventory == null) {
+            if (other.inventory != null)
+                return false;
+        } else if (!inventory.equals(other.inventory))
+            return false;
         if (level == null) {
             if (other.level != null)
                 return false;
@@ -124,7 +138,5 @@ public class CharacterInfo {
             return false;
         return true;
     }
-    
-    
     
 }

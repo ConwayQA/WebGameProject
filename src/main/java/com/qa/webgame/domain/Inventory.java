@@ -1,5 +1,7 @@
 package com.qa.webgame.domain;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class Inventory {
 
     @ManyToMany
     @JoinColumn(name = "item_id")
-    private Item item;
+    private Set<Item> item;
 
     private Long position;
     private Long charges;
@@ -33,7 +35,7 @@ public class Inventory {
     public Inventory() {
     }
 
-    public Inventory(CharacterInfo character, Item item, Long position, Long charges) {
+    public Inventory(CharacterInfo character, Set<Item> item, Long position, Long charges) {
         this.character = character;
         this.item = item;
         this.position = position;
@@ -56,13 +58,14 @@ public class Inventory {
         this.character = character;
     }
 
-    public Item getItem() {
+    public Set<Item> getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(Set<Item> item) {
         this.item = item;
     }
+
     public Long getPosition() {
         return position;
     }
@@ -127,5 +130,5 @@ public class Inventory {
             return false;
         return true;
     }
-
+    
 }

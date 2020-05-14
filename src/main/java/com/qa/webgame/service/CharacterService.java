@@ -1,10 +1,13 @@
 package com.qa.webgame.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.qa.webgame.domain.CharacterInfo;
+import com.qa.webgame.domain.Inventory;
 import com.qa.webgame.dto.CharacterDTO;
+import com.qa.webgame.dto.InventoryDTO;
 import com.qa.webgame.exceptions.CharacterNotFoundException;
 import com.qa.webgame.repository.CharacterRepository;
 
@@ -26,6 +29,10 @@ public class CharacterService {
 
     private CharacterDTO mapToDTO(CharacterInfo character){
         return this.mapper.map(character, CharacterDTO.class);
+    }
+
+    private InventoryDTO mapToDTO(Inventory inventory){
+        return this.mapper.map(inventory, InventoryDTO.class);
     }
 
     public List<CharacterDTO> readCharacters(){
@@ -59,4 +66,14 @@ public class CharacterService {
         this.repo.deleteById(id);
         return this.repo.existsById(id);
     }
+
+	public Set<InventoryDTO> findInventoryByCharacter(Long id) {
+        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        Set<Inventory> tempInventory = tempCharacter.getInventory();
+        return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
+	}
+
+	public Set<InventoryDTO> updateInventory(Long id, Inventory inventory) {
+		return null;
+	}
 }

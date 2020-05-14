@@ -1,9 +1,12 @@
 package com.qa.webgame.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import com.qa.webgame.domain.CharacterInfo;
+import com.qa.webgame.domain.Inventory;
 import com.qa.webgame.dto.CharacterDTO;
+import com.qa.webgame.dto.InventoryDTO;
 import com.qa.webgame.service.CharacterService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +49,15 @@ public class CharacterController {
     @PutMapping("/updateCharacter/{id}")
     public ResponseEntity<CharacterDTO> updateCharacter(@PathVariable Long id, @RequestBody CharacterInfo character){
         return ResponseEntity.ok(this.service.updateCharacter(id, character));
+    }
+
+    @PutMapping("/updateInventory/{id}")
+    public ResponseEntity<Set<InventoryDTO>> updateInventory(@PathVariable Long id, @RequestBody Inventory inventory){
+        return ResponseEntity.ok(this.service.updateInventory(id, inventory));
+    }
+
+    @GetMapping("/getInventoryByCharacterID/{id}")
+    public ResponseEntity<Set<InventoryDTO>> getInventoryByCharacter(@PathVariable Long id, @RequestBody Inventory inventory){
+        return ResponseEntity.ok(this.service.findInventoryByCharacter(id));
     }
 }
