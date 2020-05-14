@@ -2,8 +2,6 @@ package com.qa.webgame.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import com.qa.webgame.domain.Item;
 import com.qa.webgame.dto.ItemDTO;
 import com.qa.webgame.service.ItemService;
@@ -47,11 +45,6 @@ public class ItemController {
 
     @PutMapping("/updateItem/{id}")
     public ResponseEntity<ItemDTO> updateItem(@PathVariable Long id, @RequestBody Item item){
-        return ResponseEntity.ok(this.service.updateItem(id, item));
-    }
-
-    @PutMapping("/updateItem2")
-    public ResponseEntity<ItemDTO> updateItem2(@PathParam("id") Long id, @RequestBody Item item){
         return ResponseEntity.ok(this.service.updateItem(id, item));
     }
 
