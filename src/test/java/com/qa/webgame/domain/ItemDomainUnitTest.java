@@ -85,12 +85,25 @@ public class ItemDomainUnitTest {
 		testItem.setRarity(null);
 		testOtherItem.setRarity(null);
 		assertTrue(testItem.equals(testOtherItem));
-    }
+	}
+	
+	@Test
+	public void nullId() {
+		testItemWithId.setItemId(null);
+		assertFalse(testItemWithId.equals(testOtherItemWithId));
+	}
+	
+	@Test
+	public void nullIdOnBoth() {
+		testItemWithId.setItemId(null);
+		testOtherItemWithId.setItemId(null);
+		assertTrue(testItemWithId.equals(testOtherItemWithId));
+	}
     
 	@Test
 	public void otherIdDifferent() {
-		testOtherItem.setItemId(2L);
-		assertFalse(testItem.equals(testOtherItem));
+		testOtherItemWithId.setItemId(2L);
+		assertFalse(testItemWithId.equals(testOtherItemWithId));
 	}
 	
 	@Test
@@ -112,6 +125,44 @@ public class ItemDomainUnitTest {
 		assertFalse(testItem.equals(testOtherItem));
 	}
 	
+	@Test
+	public void otherDescriptionDifferent() {
+		testOtherItem.setDescription("Sword of Average Power");
+		assertFalse(testItem.equals(testOtherItem));
+	}
+
+	@Test
+	public void nullDescription() {
+		testItem.setDescription(null);
+		assertFalse(testItem.equals(testOtherItem));
+	}
+	
+	@Test
+	public void nullDescriptionOnBoth() {
+		testItem.setDescription(null);
+		testOtherItem.setDescription(null);
+		assertTrue(testItem.equals(testOtherItem));
+	}
+		
+	@Test
+	public void otherPropertiesDifferent() {
+		testOtherItem.setProperties("attack:10,defense:9,magic:5");
+		assertFalse(testItem.equals(testOtherItem));
+	}
+
+	@Test
+	public void nullProperties() {
+		testItem.setProperties(null);
+		assertFalse(testItem.equals(testOtherItem));
+	}
+	
+	@Test
+	public void nullPropertiesOnBoth() {
+		testItem.setProperties(null);
+		testOtherItem.setProperties(null);
+		assertTrue(testItem.equals(testOtherItem));
+	}
+
 	@Test
 	public void constructorWithoutId() {
 		Item customer = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");

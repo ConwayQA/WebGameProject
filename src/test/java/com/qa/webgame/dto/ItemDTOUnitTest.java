@@ -85,12 +85,25 @@ public class ItemDTOUnitTest {
 		testItemDTO.setRarity(null);
 		testOtherItemDTO.setRarity(null);
 		assertTrue(testItemDTO.equals(testOtherItemDTO));
-    }
+	}
+	
+	@Test
+	public void nullId() {
+		testItemDTOWithId.setItemId(null);
+		assertFalse(testItemDTOWithId.equals(testOtherItemDTOWithId));
+	}
+	
+	@Test
+	public void nullIdOnBoth() {
+		testItemDTOWithId.setItemId(null);
+		testOtherItemDTOWithId.setItemId(null);
+		assertTrue(testItemDTOWithId.equals(testOtherItemDTOWithId));
+	}
     
 	@Test
 	public void otherIdDifferent() {
-		testOtherItemDTO.setItemId(2L);
-		assertFalse(testItemDTO.equals(testOtherItemDTO));
+		testOtherItemDTOWithId.setItemId(2L);
+		assertFalse(testItemDTOWithId.equals(testOtherItemDTOWithId));
 	}
 	
 	@Test
@@ -110,6 +123,44 @@ public class ItemDTOUnitTest {
 	public void otherChanceDifferent() {
 		testOtherItemDTO.setChance(10.0);
 		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+		
+	@Test
+	public void otherDescriptionDifferent() {
+		testOtherItemDTO.setDescription("Sword of Average Power");
+		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+
+	@Test
+	public void nullDescription() {
+		testItemDTO.setDescription(null);
+		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+	
+	@Test
+	public void nullDescriptionOnBoth() {
+		testItemDTO.setDescription(null);
+		testOtherItemDTO.setDescription(null);
+		assertTrue(testItemDTO.equals(testOtherItemDTO));
+	}
+		
+	@Test
+	public void otherPropertiesDifferent() {
+		testOtherItemDTO.setProperties("attack:10,defense:9,magic:5");
+		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+
+	@Test
+	public void nullProperties() {
+		testItemDTO.setProperties(null);
+		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+	
+	@Test
+	public void nullPropertiesOnBoth() {
+		testItemDTO.setProperties(null);
+		testOtherItemDTO.setProperties(null);
+		assertTrue(testItemDTO.equals(testOtherItemDTO));
 	}
 	
 	@Test
