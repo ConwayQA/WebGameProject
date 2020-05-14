@@ -97,21 +97,21 @@ public class ItemServiceUnitTest {
         verify(repo, times(1)).existsById(id);
     }
 
-    // @Test
-    // public void updateItemTest(){
+    @Test
+    public void updateItemTest(){
 
-    //    Item newItem = new Item(2L, 3.0, "Sword of reasonable power", "attack:10,health:5");
-    //    Item updateItem = new Item(newItem.getRarity(), newItem.getChance(), newItem.getDescription(), newItem.getProperties());
-    //    updateItem.setItemId(id);
+       Item newItem = new Item(2L, 3.0, "Sword of reasonable power", "attack:10,health:5");
+       Item updateItem = new Item(newItem.getRarity(), newItem.getChance(), newItem.getDescription(), newItem.getProperties());
+       updateItem.setItemId(id);
 
-    //    ItemDTO updateItemDTO = new ModelMapper().map(updateItem, ItemDTO.class);
+       ItemDTO updateItemDTO = new ModelMapper().map(updateItem, ItemDTO.class);
 
-    //    when(this.repo.findById(id)).thenReturn(java.util.Optional.ofNullable(testItemWithId));
-    //    when(this.repo.save(updateItem)).thenReturn(updateItem);
-    //    when(this.mapper.map(updateItem, ItemDTO.class)).thenReturn(updateItemDTO);
+       when(this.repo.findById(id)).thenReturn(java.util.Optional.ofNullable(testItemWithId));
+       when(this.repo.save(updateItem)).thenReturn(updateItem);
+       when(this.mapper.map(updateItem, ItemDTO.class)).thenReturn(updateItemDTO);
 
-    //    assertEquals(updateItemDTO, this.service.updateItem(id, newItem));
-    //    verify(this.repo, times(1)).findById(id);
-    //    verify(this.repo, times(1)).save(updateItem);
-    // }
+       assertEquals(updateItemDTO, this.service.updateItem(id, newItem));
+       verify(this.repo, times(1)).findById(id);
+       verify(this.repo, times(1)).save(updateItem);
+    }
 }
