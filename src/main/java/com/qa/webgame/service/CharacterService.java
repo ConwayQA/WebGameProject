@@ -75,5 +75,5 @@ public class CharacterService {
 
 	public Set<InventoryDTO> updateInventory(Long id, Inventory inventory) {
 		return null;
-	}
+    }
 }
