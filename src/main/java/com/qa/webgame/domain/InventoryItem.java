@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name = "inventory_items")
-public class Inventory {
+public class InventoryItem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,19 +20,19 @@ public class Inventory {
 
     @ManyToOne
     @JoinColumn(name = "character_id")
-    private CharacterInfo character;
+    CharacterInfo character;
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    private Item item;
+    Item item;
 
     private Long position;
     private Long charges;
 
-    public Inventory() {
+    public InventoryItem() {
     }
 
-    public Inventory(CharacterInfo character, Item item, Long position, Long charges) {
+    public InventoryItem(CharacterInfo character, Item item, Long position, Long charges) {
         this.character = character;
         this.item = item;
         this.position = position;
@@ -99,7 +99,7 @@ public class Inventory {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Inventory other = (Inventory) obj;
+        InventoryItem other = (InventoryItem) obj;
         if (character == null) {
             if (other.character != null)
                 return false;

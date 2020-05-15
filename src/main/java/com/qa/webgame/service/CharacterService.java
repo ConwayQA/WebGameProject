@@ -5,11 +5,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.qa.webgame.domain.CharacterInfo;
-import com.qa.webgame.domain.Inventory;
+import com.qa.webgame.domain.InventoryItem;
 import com.qa.webgame.dto.CharacterDTO;
 import com.qa.webgame.dto.InventoryDTO;
 import com.qa.webgame.exceptions.CharacterNotFoundException;
 import com.qa.webgame.repository.CharacterRepository;
+import com.qa.webgame.repository.InventoryRepository;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CharacterService {
+
     private final CharacterRepository repo;
+    private final InventoryRepository inventRepo;
 
     private final ModelMapper mapper;
 
     @Autowired
-    public CharacterService(CharacterRepository repo, ModelMapper mapper){
+    public CharacterService(CharacterRepository repo, InventoryRepository inventRepo, ModelMapper mapper){
         this.repo = repo;
+        this.inventRepo = inventRepo;
         this.mapper = mapper;
     }
 
@@ -31,7 +35,7 @@ public class CharacterService {
         return this.mapper.map(character, CharacterDTO.class);
     }
 
-    private InventoryDTO mapToDTO(Inventory inventory){
+    private InventoryDTO mapToDTO(InventoryItem inventory){
         return this.mapper.map(inventory, InventoryDTO.class);
     }
 
@@ -69,11 +73,13 @@ public class CharacterService {
 
 	public Set<InventoryDTO> findInventoryByCharacter(Long id) {
         CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
-        Set<Inventory> tempInventory = tempCharacter.getInventory();
+        Set<InventoryItem> tempInventory = tempCharacter.getInventory();
         return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
 	}
 
-	public Set<InventoryDTO> updateInventory(Long id, Inventory inventory) {
-		return null;
+	public Set<InventoryDTO> updateInventory(Long id, List<InventoryItem> inventory) {
+        this.inventRepo.deleteAllByCharacterId(id);
+        List<InventoryItem> tempInventory = this.inventRepo.saveAll(inventory);
+		return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
     }
 }

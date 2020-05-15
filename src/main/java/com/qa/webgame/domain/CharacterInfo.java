@@ -20,11 +20,12 @@ public class CharacterInfo {
     private Long characterId;
     private Long health;
     private Long experience;
-    private Long level;
+    @Column (name = "current_level")
+    private Long currentLevel;
     private Long mana;
 
     @OneToMany(mappedBy = "character")
-    private Set<Inventory> inventory;
+    Set<InventoryItem> inventory;
 
     public CharacterInfo() {
     }
@@ -32,7 +33,7 @@ public class CharacterInfo {
     public CharacterInfo(Long health, Long experience, Long level, Long mana) {
         this.health = health;
         this.experience = experience;
-        this.level = level;
+        this.currentLevel = level;
         this.mana = mana;
     }
 
@@ -61,11 +62,11 @@ public class CharacterInfo {
     }
 
     public Long getLevel() {
-        return level;
+        return currentLevel;
     }
 
     public void setLevel(Long level) {
-        this.level = level;
+        this.currentLevel = level;
     }
 
     public Long getMana() {
@@ -76,11 +77,11 @@ public class CharacterInfo {
         this.mana = mana;
     }
 
-    public Set<Inventory> getInventory() {
+    public Set<InventoryItem> getInventory() {
         return inventory;
     }
 
-    public void setInventory(Set<Inventory> inventory) {
+    public void setInventory(Set<InventoryItem> inventory) {
         this.inventory = inventory;
     }
 
@@ -92,7 +93,7 @@ public class CharacterInfo {
         result = prime * result + ((experience == null) ? 0 : experience.hashCode());
         result = prime * result + ((health == null) ? 0 : health.hashCode());
         result = prime * result + ((inventory == null) ? 0 : inventory.hashCode());
-        result = prime * result + ((level == null) ? 0 : level.hashCode());
+        result = prime * result + ((currentLevel == null) ? 0 : currentLevel.hashCode());
         result = prime * result + ((mana == null) ? 0 : mana.hashCode());
         return result;
     }
@@ -126,10 +127,10 @@ public class CharacterInfo {
                 return false;
         } else if (!inventory.equals(other.inventory))
             return false;
-        if (level == null) {
-            if (other.level != null)
+        if (currentLevel == null) {
+            if (other.currentLevel != null)
                 return false;
-        } else if (!level.equals(other.level))
+        } else if (!currentLevel.equals(other.currentLevel))
             return false;
         if (mana == null) {
             if (other.mana != null)

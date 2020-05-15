@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,12 +20,12 @@ public class Item {
     private Long itemId;
     private Long rarity;
     private Double chance;
-    private String description;
+    @Column (name = "item_description")
+    private String itemDescription;
     private String properties;
 
-    @OneToMany
-    @JoinColumn(name = "items")
-    Set<Inventory> inventory;
+    @OneToMany(mappedBy = "item")
+    Set<InventoryItem> inventory;
 
     public Item() {
     }
@@ -34,7 +33,7 @@ public class Item {
     public Item(Long rarity, Double chance, String description, String properties) {
         this.rarity = rarity;
         this.chance = chance;
-        this.description = description;
+        this.itemDescription = description;
         this.properties = properties;
     }
 
@@ -63,11 +62,11 @@ public class Item {
     }
 
     public String getDescription() {
-        return description;
+        return itemDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.itemDescription = description;
     }
 
     public String getProperties() {
@@ -83,7 +82,7 @@ public class Item {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((chance == null) ? 0 : chance.hashCode());
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((itemDescription == null) ? 0 : itemDescription.hashCode());
         result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
         result = prime * result + ((properties == null) ? 0 : properties.hashCode());
         result = prime * result + ((rarity == null) ? 0 : rarity.hashCode());
@@ -104,10 +103,10 @@ public class Item {
                 return false;
         } else if (!chance.equals(other.chance))
             return false;
-        if (description == null) {
-            if (other.description != null)
+        if (itemDescription == null) {
+            if (other.itemDescription != null)
                 return false;
-        } else if (!description.equals(other.description))
+        } else if (!itemDescription.equals(other.itemDescription))
             return false;
         if (itemId == null) {
             if (other.itemId != null)
