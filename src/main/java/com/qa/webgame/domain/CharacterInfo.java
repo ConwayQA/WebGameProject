@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class CharacterInfo {
     private Long currentLevel;
     private Long mana;
 
-    @OneToMany(mappedBy = "character")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "character")
     Set<InventoryItem> inventory;
 
     public CharacterInfo() {
@@ -92,7 +93,6 @@ public class CharacterInfo {
         result = prime * result + ((characterId == null) ? 0 : characterId.hashCode());
         result = prime * result + ((experience == null) ? 0 : experience.hashCode());
         result = prime * result + ((health == null) ? 0 : health.hashCode());
-        result = prime * result + ((inventory == null) ? 0 : inventory.hashCode());
         result = prime * result + ((currentLevel == null) ? 0 : currentLevel.hashCode());
         result = prime * result + ((mana == null) ? 0 : mana.hashCode());
         return result;
@@ -121,11 +121,6 @@ public class CharacterInfo {
             if (other.health != null)
                 return false;
         } else if (!health.equals(other.health))
-            return false;
-        if (inventory == null) {
-            if (other.inventory != null)
-                return false;
-        } else if (!inventory.equals(other.inventory))
             return false;
         if (currentLevel == null) {
             if (other.currentLevel != null)

@@ -78,7 +78,8 @@ public class CharacterService {
 	}
 
 	public Set<InventoryDTO> updateInventory(Long id, List<InventoryItem> inventory) {
-        this.inventRepo.deleteAllByCharacterId(id);
+        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        this.inventRepo.deleteAllByCharacter(tempCharacter);
         List<InventoryItem> tempInventory = this.inventRepo.saveAll(inventory);
 		return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
     }
