@@ -1,15 +1,15 @@
-import React from 'react'
-import { Grommet, grommet, Box, Main, Grid, Header, Menu, Text, TextInput, Image, Meter, Paragraph } from 'grommet'
-import { Menu as MenuIcon, Save as SaveIcon } from 'grommet-icons'
-  
-function loadButton(){
-    
+import React from 'react';
+import { Grommet, grommet, Box, Main, Grid, Header, Menu, Text, TextInput, Image, Meter, Paragraph } from 'grommet';
+import { Menu as MenuIcon, Save as SaveIcon } from 'grommet-icons';
+import CharacterInventory from './components/CharacterInventory.js';
+import { render } from 'react-dom';
 
-}
-  
+
 export default () => {
-    
+
+
     return (
+      
     <Grommet theme={grommet}>
         <Box align="center" justify="center" background={{"color":"background","image":"url('https://drive.google.com/uc?id=1Knipix6Uvjo3wUYRZLiLB8nv334rexht')","position":"centre"}} direction="column" flex={true} fill={true} basis="full">
         <Main fill={true} flex={true} overflow="hidden">
@@ -21,7 +21,7 @@ export default () => {
                     <Menu label="Menu" size="medium" 
                         items={[
                             {"label":"Save"},
-                            {"label":"Load", onClick: loadButton()}
+                            {"label":"Load", onClick: () => {CharacterInventory()}}
                         ]} 
                         dropBackground={{"color":"dark-6","opacity":"strong"}} icon={<MenuIcon />} />
                   </Box>
