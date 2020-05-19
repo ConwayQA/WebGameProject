@@ -2,8 +2,8 @@ package com.qa.webgame.domain;
 
 public class InventoryItemJSON {
 
-    private Long CharacterID;
-    private Long ItemID;
+    private Long characterID;
+    private Long itemID;
     private Long position;
     private Long charges;
 
@@ -12,27 +12,27 @@ public class InventoryItemJSON {
     }
 
 
-    public InventoryItemJSON(Long CharacterID, Long ItemID, Long position, Long charges) {
-        this.CharacterID = CharacterID;
-        this.ItemID = ItemID;
+    public InventoryItemJSON(Long characterID, Long itemID, Long position, Long charges) {
+        this.characterID = characterID;
+        this.itemID = itemID;
         this.position = position;
         this.charges = charges;
     }
 
     public Long getCharacterID() {
-        return this.CharacterID;
+        return this.characterID;
     }
 
-    public void setCharacterID(Long CharacterID) {
-        this.CharacterID = CharacterID;
+    public void setCharacterID(Long characterID) {
+        this.characterID = characterID;
     }
 
     public Long getItemID() {
-        return this.ItemID;
+        return this.itemID;
     }
 
-    public void setItemID(Long ItemID) {
-        this.ItemID = ItemID;
+    public void setItemID(Long itemID) {
+        this.itemID = itemID;
     }
 
     public Long getPosition() {
@@ -55,8 +55,8 @@ public class InventoryItemJSON {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((CharacterID == null) ? 0 : CharacterID.hashCode());
-        result = prime * result + ((ItemID == null) ? 0 : ItemID.hashCode());
+        result = prime * result + ((characterID == null) ? 0 : characterID.hashCode());
+        result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
         result = prime * result + ((charges == null) ? 0 : charges.hashCode());
         result = prime * result + ((position == null) ? 0 : position.hashCode());
         return result;
@@ -71,15 +71,15 @@ public class InventoryItemJSON {
         if (getClass() != obj.getClass())
             return false;
         InventoryItemJSON other = (InventoryItemJSON) obj;
-        if (CharacterID == null) {
-            if (other.CharacterID != null)
+        if (characterID == null) {
+            if (other.characterID != null)
                 return false;
-        } else if (!CharacterID.equals(other.CharacterID))
+        } else if (!characterID.equals(other.characterID))
             return false;
-        if (ItemID == null) {
-            if (other.ItemID != null)
+        if (itemID == null) {
+            if (other.itemID != null)
                 return false;
-        } else if (!ItemID.equals(other.ItemID))
+        } else if (!itemID.equals(other.itemID))
             return false;
         if (charges == null) {
             if (other.charges != null)

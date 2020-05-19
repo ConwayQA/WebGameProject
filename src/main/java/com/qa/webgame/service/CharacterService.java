@@ -1,11 +1,14 @@
 package com.qa.webgame.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.qa.webgame.domain.CharacterInfo;
 import com.qa.webgame.domain.InventoryItem;
+import com.qa.webgame.domain.InventoryItemJSON;
+import com.qa.webgame.domain.Item;
 import com.qa.webgame.dto.CharacterDTO;
 import com.qa.webgame.dto.InventoryDTO;
 import com.qa.webgame.exceptions.CharacterNotFoundException;
@@ -21,13 +24,15 @@ public class CharacterService {
 
     private final CharacterRepository repo;
     private final InventoryRepository inventRepo;
+    private final ItemService itemService; 
 
     private final ModelMapper mapper;
 
     @Autowired
-    public CharacterService(CharacterRepository repo, InventoryRepository inventRepo, ModelMapper mapper){
+    public CharacterService(CharacterRepository repo, InventoryRepository inventRepo, ItemService itemService, ModelMapper mapper){
         this.repo = repo;
         this.inventRepo = inventRepo;
+        this.itemService = itemService;
         this.mapper = mapper;
     }
 
@@ -68,6 +73,7 @@ public class CharacterService {
             throw new CharacterNotFoundException();
         }
         this.repo.deleteById(id);
+        deleteInventoryByCharacter(id);
         return this.repo.existsById(id);
     }
 
@@ -75,12 +81,36 @@ public class CharacterService {
         CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
         Set<InventoryItem> tempInventory = tempCharacter.getInventory();
         return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
-	}
+    }
 
-	public Set<InventoryDTO> updateInventory(Long id, List<InventoryItem> inventory) {
+	public Set<InventoryDTO> updateInventory(Long id, List<InventoryItemJSON> inventory) {
         CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
-        this.inventRepo.deleteAllByCharacter(tempCharacter);
-        List<InventoryItem> tempInventory = this.inventRepo.saveAll(inventory);
+        deleteInventoryByCharacter(id);  
+        List<InventoryItem> fetchFullInventory = generateInventory(tempCharacter, inventory);
+        List<InventoryItem> tempInventory = this.inventRepo.saveAll(fetchFullInventory);
 		return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
+    }
+
+    public List<InventoryItem> generateInventory(CharacterInfo tempCharacter, List<InventoryItemJSON> inventory){
+        List<InventoryItem> tempInventory = new ArrayList<>();
+        for (InventoryItemJSON inventItem : inventory){
+            InventoryItem tempInventItem = new InventoryItem();
+            tempInventItem.setCharacter(tempCharacter);
+            Item fetchItem = itemService.findItemByIdPure(inventItem.getItemID());
+            tempInventItem.setItem(fetchItem);
+            tempInventItem.setPosition(inventItem.getPosition());
+            tempInventItem.setCharges(inventItem.getCharges());
+            tempInventory.add(tempInventItem);
+        }
+        return tempInventory;
+    }
+
+    public boolean deleteInventoryByCharacter(Long id){
+        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        Set<InventoryItem> tempInventory = tempCharacter.getInventory();
+        for (InventoryItem tempItem : tempInventory){
+            this.inventRepo.delete(tempItem);
+        }
+        return false;
     }
 }

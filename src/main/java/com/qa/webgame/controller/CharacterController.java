@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.qa.webgame.domain.CharacterInfo;
 import com.qa.webgame.domain.InventoryItem;
+import com.qa.webgame.domain.InventoryItemJSON;
 import com.qa.webgame.dto.CharacterDTO;
 import com.qa.webgame.dto.InventoryDTO;
 import com.qa.webgame.service.CharacterService;
@@ -52,7 +53,7 @@ public class CharacterController {
     }
 
     @PutMapping("/updateInventory/{id}")
-    public ResponseEntity<Set<InventoryDTO>> updateInventory(@PathVariable Long id, @RequestBody List<InventoryItem> inventory){
+    public ResponseEntity<Set<InventoryDTO>> updateInventory(@PathVariable Long id, @RequestBody List<InventoryItemJSON> inventory){
         
         return ResponseEntity.ok(this.service.updateInventory(id, inventory));
     }

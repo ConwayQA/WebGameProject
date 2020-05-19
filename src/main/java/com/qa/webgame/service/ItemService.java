@@ -43,6 +43,11 @@ public class ItemService {
         return this.mapToDTO(tempItem);
     }
 
+    public Item findItemByIdPure(Long id){
+        Item tempItem = this.repo.findById(id).orElseThrow(ItemNotFoundException::new);
+        return (tempItem);
+    }
+
     public ItemDTO updateItem(Long id, Item item){
         Item update = this.repo.findById(id).orElseThrow(ItemNotFoundException::new);
         update.setRarity(item.getRarity());
