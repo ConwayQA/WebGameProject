@@ -54,6 +54,7 @@ public class ItemService {
         update.setChance(item.getChance());
         update.setDescription(item.getDescription());
         update.setProperties(item.getProperties());
+        update.setImgUrl(item.getImgUrl());
         Item tempItem = this.repo.save(update);
         return this.mapToDTO(tempItem);
     }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.qa.webgame.domain.CharacterInfo;
-import com.qa.webgame.domain.InventoryItem;
 import com.qa.webgame.domain.InventoryItemJSON;
 import com.qa.webgame.dto.CharacterDTO;
 import com.qa.webgame.dto.InventoryDTO;

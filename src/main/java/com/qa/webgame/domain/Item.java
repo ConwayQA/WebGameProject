@@ -24,6 +24,7 @@ public class Item {
     @Column (name = "item_description")
     private String itemDescription;
     private String properties;
+    private String imgUrl;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
     Set<InventoryItem> inventory;
@@ -31,11 +32,12 @@ public class Item {
     public Item() {
     }
 
-    public Item(Long rarity, Double chance, String description, String properties) {
+    public Item(Long rarity, Double chance, String itemDescription, String properties, String imgUrl) {
         this.rarity = rarity;
         this.chance = chance;
-        this.itemDescription = description;
+        this.itemDescription = itemDescription;
         this.properties = properties;
+        this.imgUrl = imgUrl;
     }
 
     public Long getItemId() {
@@ -78,11 +80,20 @@ public class Item {
         this.properties = properties;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((chance == null) ? 0 : chance.hashCode());
+        result = prime * result + ((imgUrl == null) ? 0 : imgUrl.hashCode());
         result = prime * result + ((itemDescription == null) ? 0 : itemDescription.hashCode());
         result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
         result = prime * result + ((properties == null) ? 0 : properties.hashCode());
@@ -103,6 +114,11 @@ public class Item {
             if (other.chance != null)
                 return false;
         } else if (!chance.equals(other.chance))
+            return false;
+        if (imgUrl == null) {
+            if (other.imgUrl != null)
+                return false;
+        } else if (!imgUrl.equals(other.imgUrl))
             return false;
         if (itemDescription == null) {
             if (other.itemDescription != null)
@@ -126,7 +142,5 @@ public class Item {
             return false;
         return true;
     }
-
-    
 
 }
