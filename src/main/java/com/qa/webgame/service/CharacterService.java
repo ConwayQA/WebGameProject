@@ -54,12 +54,12 @@ public class CharacterService {
     }
 
     public CharacterDTO findCharacterById(Long id){
-        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        CharacterInfo tempCharacter = getCurrentCharacterInfo(id);
         return this.mapToDTO(tempCharacter);
     }
 
     public CharacterDTO updateCharacter(Long id, CharacterInfo character){
-        CharacterInfo update = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        CharacterInfo update = getCurrentCharacterInfo(id);
         update.setExperience(character.getExperience());
         update.setHealth(character.getHealth());
         update.setLevel(character.getLevel());
@@ -78,31 +78,46 @@ public class CharacterService {
     }
 
 	public Set<InventoryDTO> findInventoryByCharacter(Long id) {
-        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        CharacterInfo tempCharacter = getCurrentCharacterInfo(id);
         Set<InventoryItem> tempInventory = tempCharacter.getInventory();
         return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
     }
 
 	public Set<InventoryDTO> updateInventory(Long id, List<InventoryItemJSON> inventory) {
-        CharacterInfo tempCharacter = this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+        CharacterInfo tempCharacter = getCurrentCharacterInfo(id);
         deleteInventoryByCharacter(id);  
         List<InventoryItem> fetchFullInventory = generateInventory(tempCharacter, inventory);
         List<InventoryItem> tempInventory = this.inventRepo.saveAll(fetchFullInventory);
 		return tempInventory.stream().map(this::mapToDTO).collect(Collectors.toSet());
     }
 
+    public InventoryDTO addItemToInventory(Long id, InventoryItemJSON item){
+        CharacterInfo tempCharacter = getCurrentCharacterInfo(id);
+        InventoryItem tempItem = generateFullItem(tempCharacter, item);
+        this.inventRepo.save(tempItem);
+        return mapToDTO(tempItem);
+    }
+
+    public CharacterInfo getCurrentCharacterInfo(Long id) {
+        return this.repo.findById(id).orElseThrow(CharacterNotFoundException::new);
+    }
+
     public List<InventoryItem> generateInventory(CharacterInfo tempCharacter, List<InventoryItemJSON> inventory){
         List<InventoryItem> tempInventory = new ArrayList<>();
         for (InventoryItemJSON inventItem : inventory){
-            InventoryItem tempInventItem = new InventoryItem();
-            tempInventItem.setCharacter(tempCharacter);
-            Item fetchItem = itemService.findItemByIdPure(inventItem.getItemID());
-            tempInventItem.setItem(fetchItem);
-            tempInventItem.setPosition(inventItem.getPosition());
-            tempInventItem.setCharges(inventItem.getCharges());
-            tempInventory.add(tempInventItem);
+            tempInventory.add(generateFullItem(tempCharacter, inventItem));
         }
         return tempInventory;
+    }
+
+    public InventoryItem generateFullItem(CharacterInfo tempCharacter, InventoryItemJSON item){
+        InventoryItem tempInventItem = new InventoryItem();
+            tempInventItem.setCharacter(tempCharacter);
+            Item fetchItem = itemService.findItemByIdPure(item.getItemID());
+            tempInventItem.setItem(fetchItem);
+            tempInventItem.setPosition(item.getPosition());
+            tempInventItem.setCharges(item.getCharges());
+            return tempInventItem;
     }
 
     public boolean deleteInventoryByCharacter(Long id){

@@ -62,4 +62,9 @@ public class CharacterController {
     public ResponseEntity<Set<InventoryDTO>> getInventoryByCharacter(@PathVariable Long id){
         return ResponseEntity.ok(this.service.findInventoryByCharacter(id));
     }
+
+    @PostMapping("/addItemToInventory/{id}")
+    public ResponseEntity<InventoryDTO> addItemToInventory(@PathVariable Long id, @RequestBody InventoryItemJSON item){
+        return new ResponseEntity<InventoryDTO>(this.service.addItemToInventory(id, item), HttpStatus.CREATED);
+    }
 }

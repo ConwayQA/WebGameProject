@@ -1,12 +1,16 @@
 import React from 'react';
-import { Grommet, grommet, Box, Main, Grid, Header, Menu, Text, TextInput, Image, Meter, Paragraph } from 'grommet';
+import { Grommet, grommet, Box, Main, Grid, Header, Menu, Text, TextInput, Image, Meter, Paragraph, Stack } from 'grommet';
 import { Menu as MenuIcon, Save as SaveIcon } from 'grommet-icons';
 import CharacterInventory from './components/CharacterInventory.js';
-import { render } from 'react-dom';
-
+import { render, createPortal } from 'react-dom';
 
 export default () => {
 
+  function handleClickLoad() {
+    console.log('The link was clicked.');
+    CharacterInventory();
+    console.log(globalInventory);
+  }
 
     return (
       
@@ -16,24 +20,9 @@ export default () => {
           <Grid columns={["full"]} rows={["xsmall","2/3","1/4"]} areas={[{"name":"Header","start":[0,0],"end":[0,0]},{"name":"Main","start":[0,1],"end":[0,1]},{"name":"Footer","start":[0,2],"end":[0,2]}]} fill="vertical" gap="xxsmall">
             <Header align="stretch" direction="column" flex={true} justify="start" gap="xxsmall" fill={true} gridArea="Header" pad="xsmall" background={{"position":"center"}} overflow="hidden">
               <Box align="center" justify="center" overflow="auto" fill="vertical" gridArea="Buttons" background={{"color":"dark-6","opacity":"strong"}} border={{"color":"dark-1","size":"large","style":"double"}} elevation="large" round="medium" direction="row" alignSelf="center">
-                <Grid rows={["auto"]} columns={["small","small","small"]} fill="vertical" pad={{"left":"xlarge","right":"xlarge"}} areas={[{"name":"Menu","start":[0,0],"end":[0,0]},{"name":"CharID","start":[1,0],"end":[1,0]}]}>
-                  <Box align="center" justify="center" gridArea="Menu" fill={true}>
-                    <Menu label="Menu" size="medium" 
-                        items={[
-                            {"label":"Save"},
-                            {"label":"Load", onClick: () => {CharacterInventory()}}
-                        ]} 
-                        dropBackground={{"color":"dark-6","opacity":"strong"}} icon={<MenuIcon />} />
-                  </Box>
-                  <Box align="end" justify="center" gridArea="CharID" fill={true}>
-                    <Text>
-                      Character ID: 
-                    </Text>
-                  </Box>
-                  <Box align="center" justify="center">
-                    <TextInput size="small" type="text" placeholder="5" icon={<SaveIcon />} reverse={true} />
-                  </Box>
-                </Grid>
+
+                <CharacterInventory />
+                 
               </Box>
             </Header>
             <Box align="center" justify="center" gridArea="Main" direction="column" overflow="hidden" fill={true}>
@@ -47,9 +36,12 @@ export default () => {
                 <Box align="center" justify="end" gridArea="Window" pad={{"left":"large","right":"large","bottom":"medium"}} wrap={false} flex={true} fill={true}>
                   <Meter thickness="large" type="bar" values={[{"color":"graph-4","label":"enemyHealth","value":100}]} max={120} round={true} size="medium" />
                 </Box>
-                <Box align="center" justify="center" fill={true} direction="column" gridArea="Inventory" overflow="hidden" flex={true}>
-                  <Image src="https://drive.google.com/uc?id=1qTKOpKhmB84-cnG2uu330JO3IIrexrZB" fill={true} fit="contain" />
-                </Box>
+                <Stack fill={true}>
+                  <Box align="center" justify="center" fill={true} direction="column" gridArea="Inventory" overflow="hidden" flex={true}>
+                    <Image src="https://drive.google.com/uc?id=1qTKOpKhmB84-cnG2uu330JO3IIrexrZB" fill={true} fit="contain" />
+                  </Box>
+                  <Box id="inventoryPortal" align="center" pad={{"top":"large"}}></Box>
+                </Stack>
               </Grid>
             </Box>
             <Box align="center" justify="center" overflow="hidden" gridArea="Footer" fill="vertical">
