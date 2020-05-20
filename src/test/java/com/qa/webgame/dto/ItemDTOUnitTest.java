@@ -19,11 +19,11 @@ public class ItemDTOUnitTest {
 	
 	@Before
 	public void setUp() {
-        testItemDTO = new ItemDTO(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
-        testItemDTOWithId = new ItemDTO(testItemDTO.getRarity(), testItemDTO.getChance(), testItemDTO.getDescription(), testItemDTO.getProperties());
+        testItemDTO = new ItemDTO(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
+        testItemDTOWithId = new ItemDTO(testItemDTO.getRarity(), testItemDTO.getChance(), testItemDTO.getDescription(), testItemDTO.getProperties(), testItemDTO.getImgUrl());
         testItemDTOWithId.setItemId(id);
-        testOtherItemDTO = new ItemDTO(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
-        testOtherItemDTOWithId = new ItemDTO(testOtherItemDTO.getRarity(), testOtherItemDTO.getChance(), testOtherItemDTO.getDescription(), testOtherItemDTO.getProperties());
+        testOtherItemDTO = new ItemDTO(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
+        testOtherItemDTOWithId = new ItemDTO(testOtherItemDTO.getRarity(), testOtherItemDTO.getChance(), testOtherItemDTO.getDescription(), testOtherItemDTO.getProperties(), testOtherItemDTO.getImgUrl());
         testOtherItemDTOWithId.setItemId(id);
 	}
 	
@@ -34,6 +34,7 @@ public class ItemDTOUnitTest {
 		assertNotNull(testItemDTOWithId.getChance());
 		assertNotNull(testItemDTOWithId.getDescription());
 		assertNotNull(testItemDTOWithId.getProperties());
+		assertNotNull(testItemDTOWithId.getImgUrl());
 		
 		testItemDTOWithId.setItemId(null);
 		assertNull(testItemDTOWithId.getItemId());
@@ -45,6 +46,8 @@ public class ItemDTOUnitTest {
 		assertNull(testItemDTOWithId.getDescription());
 		testItemDTOWithId.setProperties(null);
 		assertNull(testItemDTOWithId.getProperties());
+		testItemDTOWithId.setImgUrl(null);
+		assertNull(testItemDTOWithId.getImgUrl());
 		
 	}
 	
@@ -164,13 +167,33 @@ public class ItemDTOUnitTest {
 	}
 	
 	@Test
+	public void otherImgUrlDifferent() {
+		testOtherItemDTO.setImgUrl("attack:10,defense:9,magic:5");
+		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+
+	@Test
+	public void nullImgUrl() {
+		testItemDTO.setImgUrl(null);
+		assertFalse(testItemDTO.equals(testOtherItemDTO));
+	}
+	
+	@Test
+	public void nullImgUrlOnBoth() {
+		testItemDTO.setImgUrl(null);
+		testOtherItemDTO.setImgUrl(null);
+		assertTrue(testItemDTO.equals(testOtherItemDTO));
+	}
+
+	@Test
 	public void constructorWithoutId() {
-		ItemDTO customer = new ItemDTO(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
+		ItemDTO customer = new ItemDTO(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
 		assertNull(customer.getItemId());
 		assertNotNull(customer.getRarity());
 		assertNotNull(customer.getChance());
 		assertNotNull(customer.getDescription());
 		assertNotNull(customer.getProperties());
+		assertNotNull(customer.getImgUrl());
 	}
 	
 	@Test
@@ -179,9 +202,9 @@ public class ItemDTOUnitTest {
 	}
 	@Test
 	public void hashCodeTestWithNull() {
-        ItemDTO ItemDTO = new ItemDTO(null, null, null, null);
+        ItemDTO ItemDTO = new ItemDTO(null, null, null, null, null);
         ItemDTO.setItemId(null);
-        ItemDTO otherItemDTO = new ItemDTO(null, null, null, null);
+        ItemDTO otherItemDTO = new ItemDTO(null, null, null, null, null);
         otherItemDTO.setItemId(null);
 		assertEquals(ItemDTO.hashCode(), otherItemDTO.hashCode());
 	}

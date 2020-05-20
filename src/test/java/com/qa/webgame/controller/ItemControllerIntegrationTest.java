@@ -55,7 +55,7 @@ public class ItemControllerIntegrationTest {
     @Before
     public void setUp(){
         this.repository.deleteAll();
-        this.testItem = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
+        this.testItem = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
         this.testItemWithID = this.repository.save(testItem);
         this.id = testItemWithID.getItemId();
         this.testItemDTO = this.mapToDTO(testItemWithID);

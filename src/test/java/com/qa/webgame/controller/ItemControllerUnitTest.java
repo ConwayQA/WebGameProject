@@ -52,9 +52,9 @@ public class ItemControllerUnitTest {
     @Before
     public void setUp(){
         this.itemList = new ArrayList<>();
-        this.testItem = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
+        this.testItem = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
         this.itemList.add(testItem);
-        this.testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties());
+        this.testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties(), testItem.getImgUrl());
         this.testItemWithId.setItemId(id);
         this.testItemDTO = mapToDTO(testItemWithId);
     }

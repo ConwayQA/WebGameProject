@@ -19,11 +19,11 @@ public class ItemDomainUnitTest {
 	
 	@Before
 	public void setUp() {
-        testItem = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
-        testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties());
+        testItem = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
+        testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties(), testItem.getImgUrl());
         testItemWithId.setItemId(id);
-        testOtherItem = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
-        testOtherItemWithId = new Item(testOtherItem.getRarity(), testOtherItem.getChance(), testOtherItem.getDescription(), testOtherItem.getProperties());
+        testOtherItem = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
+        testOtherItemWithId = new Item(testOtherItem.getRarity(), testOtherItem.getChance(), testOtherItem.getDescription(), testOtherItem.getProperties(), testItem.getImgUrl());
         testOtherItemWithId.setItemId(id);
 	}
 	
@@ -34,6 +34,7 @@ public class ItemDomainUnitTest {
 		assertNotNull(testItemWithId.getChance());
 		assertNotNull(testItemWithId.getDescription());
 		assertNotNull(testItemWithId.getProperties());
+		assertNotNull(testItemWithId.getImgUrl());
 		
 		testItemWithId.setItemId(null);
 		assertNull(testItemWithId.getItemId());
@@ -45,6 +46,8 @@ public class ItemDomainUnitTest {
 		assertNull(testItemWithId.getDescription());
 		testItemWithId.setProperties(null);
 		assertNull(testItemWithId.getProperties());
+		testItemWithId.setImgUrl(null);
+		assertNull(testItemWithId.getImgUrl());
 		
 	}
 	
@@ -164,13 +167,33 @@ public class ItemDomainUnitTest {
 	}
 
 	@Test
+	public void otherImgUrlDifferent() {
+		testOtherItem.setImgUrl("attack:10,defense:9,magic:5");
+		assertFalse(testItem.equals(testOtherItem));
+	}
+
+	@Test
+	public void nullImgUrl() {
+		testItem.setImgUrl(null);
+		assertFalse(testItem.equals(testOtherItem));
+	}
+	
+	@Test
+	public void nullImgUrlOnBoth() {
+		testItem.setImgUrl(null);
+		testOtherItem.setImgUrl(null);
+		assertTrue(testItem.equals(testOtherItem));
+	}
+
+	@Test
 	public void constructorWithoutId() {
-		Item customer = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
+		Item customer = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
 		assertNull(customer.getItemId());
 		assertNotNull(customer.getRarity());
 		assertNotNull(customer.getChance());
 		assertNotNull(customer.getDescription());
 		assertNotNull(customer.getProperties());
+		assertNotNull(customer.getImgUrl());
 	}
 	
 	@Test
@@ -179,9 +202,9 @@ public class ItemDomainUnitTest {
 	}
 	@Test
 	public void hashCodeTestWithNull() {
-        Item item = new Item(null, null, null, null);
+        Item item = new Item(null, null, null, null, null);
         item.setItemId(null);
-        Item otherItem = new Item(null, null, null, null);
+        Item otherItem = new Item(null, null, null, null, null);
         otherItem.setItemId(null);
 		assertEquals(item.hashCode(), otherItem.hashCode());
 	}

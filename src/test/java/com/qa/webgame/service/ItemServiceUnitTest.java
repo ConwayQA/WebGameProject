@@ -51,9 +51,9 @@ public class ItemServiceUnitTest {
     @Before
     public void setUp(){
         this.itemList = new ArrayList<>();
-        this.testItem = new Item(5L, 0.1, "Sword of ultimate power", "attack:100,defense:90,magic:50");
+        this.testItem = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
         this.itemList.add(testItem);
-        this.testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties());
+        this.testItemWithId = new Item(testItem.getRarity(), testItem.getChance(), testItem.getDescription(), testItem.getProperties(), testItem.getImgUrl());
         this.testItemWithId.setItemId(id);
         this.testItemDTO = mapToDTO(testItemWithId);
     }
@@ -100,8 +100,8 @@ public class ItemServiceUnitTest {
     @Test
     public void updateItemTest(){
 
-       Item newItem = new Item(2L, 3.0, "Sword of reasonable power", "attack:10,health:5");
-       Item updateItem = new Item(newItem.getRarity(), newItem.getChance(), newItem.getDescription(), newItem.getProperties());
+       Item newItem = new Item(1L, 4.0, "Potion of Lesser Arcana:Use to recover mana by 50", "consumable:1,currentMana:50", "https://drive.google.com/uc?id=1_gT3YPNsECA4mQHqwbUa-db2hu3XmQGm");
+       Item updateItem = new Item(newItem.getRarity(), newItem.getChance(), newItem.getDescription(), newItem.getProperties(), newItem.getImgUrl());
        updateItem.setItemId(id);
 
        ItemDTO updateItemDTO = new ModelMapper().map(updateItem, ItemDTO.class);
