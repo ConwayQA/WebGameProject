@@ -2,6 +2,7 @@ package com.qa.webgame.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +26,7 @@ public class CharacterInfo {
     private Long currentLevel;
     private Long mana;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "character")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "character", cascade = CascadeType.REMOVE)
     Set<InventoryItem> inventory;
 
     public CharacterInfo() {

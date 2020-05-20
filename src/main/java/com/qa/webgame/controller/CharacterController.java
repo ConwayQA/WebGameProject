@@ -52,7 +52,7 @@ public class CharacterController {
         return ResponseEntity.ok(this.service.updateCharacter(id, character));
     }
 
-    @PutMapping("/updateInventory/{id}")
+    @PostMapping("/updateInventory/{id}")
     public ResponseEntity<Set<InventoryDTO>> updateInventory(@PathVariable Long id, @RequestBody List<InventoryItemJSON> inventory){
         
         return ResponseEntity.ok(this.service.updateInventory(id, inventory));

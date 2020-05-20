@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Portal } from 'react-portal';
 import { Grommet, grommet, Box, Main, Grid, Header, Menu, Text, TextInput, Image, Meter, Paragraph, Button } from 'grommet';
 import { Menu as MenuIcon, Save as SaveIcon } from 'grommet-icons';
-import {globalInventory} from './global';
 import { render } from 'react-dom';
 
 class CharacterInventory extends React.Component {
@@ -49,6 +48,69 @@ class CharacterInventory extends React.Component {
 
     }
 
+    saveCharacterInventory(){
+        let inventory = [];
+        for(let i = 0; i < this.state.inventory.length; i++){
+            let tempItem = {
+                "characterID": this.state.id,
+                "itemID": this.state.inventory[i].itemId,
+                "position": i + 1,
+                "charges": 1
+            };
+            inventory.push(tempItem);
+        }
+        let inventoryJSON = JSON.stringify(inventory);
+        console.log(inventoryJSON);
+        API.post(`/updateInventory/${this.state.id}`, inventoryJSON)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    deleteCharacterInventory(){
+        API.delete(`/deleteCharacter/${this.state.id}`)
+        .then(response => {
+            console.log(response);
+            this.setState({
+                toggler: false,
+                id: '',
+                inventory: []
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({
+                toggler: false,
+                id: '',
+                inventory: []
+            });
+        });
+    }
+
+    createCharacter(){
+        let characterCreate = {
+            "health": 100,
+            "experience": 0,
+            "level": 1,
+            "mana": 100
+        };
+        let characterJSON = JSON.stringify(characterCreate);
+        API.post(`/createCharacter`, characterJSON)
+        .then(response => {
+            console.log(response);
+            this.setState({
+                toggler: true,
+                id: response.data.characterId
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
     createTable() {
         let table = [];
         for(let i = 0; i < this.state.inventory.length; i++){
@@ -66,8 +128,10 @@ class CharacterInventory extends React.Component {
                     <Box align="center" justify="center" gridArea="Menu" fill={true}>
                     <Menu id = "menu!" label="Menu" size="medium" 
                                 items={[
-                                    {"label":"Save",},
-                                    {"label":"Load", onClick: () => {this.getCharacterInventory()}}
+                                    {"label":"Create", onClick: () => {this.createCharacter()}},
+                                    {"label":"Save", onClick: () => {this.saveCharacterInventory()}},
+                                    {"label":"Load", onClick: () => {this.getCharacterInventory()}},
+                                    {"label":"Delete", onClick: () => {this.deleteCharacterInventory()}}
                                 ]} 
                                 dropBackground={{"color":"dark-6","opacity":"strong"}} icon={<MenuIcon />} />
                     </Box>
@@ -90,8 +154,10 @@ class CharacterInventory extends React.Component {
                     <Box align="center" justify="center" gridArea="Menu" fill={true}>
                 <Menu label="menu!" size="medium" 
                     items={[
-                        {"label":"Save"},
-                        {"label":"Load", onClick: () => {this.getCharacterInventory()}}
+                        {"label":"Create", onClick: () => {this.createCharacter()}},
+                        {"label":"Save", onClick: () => {this.saveCharacterInventory()}},
+                        {"label":"Load", onClick: () => {this.getCharacterInventory()}},
+                        {"label":"Delete", onClick: () => {this.deleteCharacterInventory()}}
                     ]} 
                     dropBackground={{"color":"dark-6","opacity":"strong"}} icon={<MenuIcon />} />
                     </Box>

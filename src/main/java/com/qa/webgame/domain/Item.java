@@ -2,6 +2,7 @@ package com.qa.webgame.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table (name = "items")
@@ -26,7 +28,7 @@ public class Item {
     private String properties;
     private String imgUrl;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.REMOVE)
     Set<InventoryItem> inventory;
 
     public Item() {
