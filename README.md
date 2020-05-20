@@ -19,7 +19,7 @@ Open your command line in the main directory of the project and run the followin
 '''
     mvn clean package
     cd target
-    java -jar LukeConway-SoftwareMarch16-jar-with-dependencies.jar
+    java -jar webgame-jar-with-dependencies.jar
 '''
 
 ## Running the tests
