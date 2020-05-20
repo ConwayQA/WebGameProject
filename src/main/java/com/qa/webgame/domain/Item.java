@@ -28,7 +28,7 @@ public class Item {
     private String properties;
     private String imgUrl;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
     Set<InventoryItem> inventory;
 
     public Item() {

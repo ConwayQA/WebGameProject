@@ -26,7 +26,7 @@ public class CharacterInfo {
     private Long currentLevel;
     private Long mana;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "character", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "character", cascade = CascadeType.ALL)
     Set<InventoryItem> inventory;
 
     public CharacterInfo() {
