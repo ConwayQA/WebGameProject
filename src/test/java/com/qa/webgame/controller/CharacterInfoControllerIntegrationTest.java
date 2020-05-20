@@ -1,9 +1,9 @@
 package com.qa.webgame.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qa.webgame.domain.Item;
-import com.qa.webgame.dto.ItemDTO;
-import com.qa.webgame.repository.ItemRepository;
+import com.qa.webgame.domain.CharacterInfo;
+import com.qa.webgame.dto.CharacterDTO;
+import com.qa.webgame.repository.CharacterRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,87 +27,87 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ItemControllerIntegrationTest {
+public class CharacterInfoControllerIntegrationTest {
     
     @Autowired
     private MockMvc mock;
 
     @Autowired
-    private ItemRepository repository;
+    private CharacterRepository repository;
 
     @Autowired
     private ModelMapper mapper;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private Item testItem;
+    private CharacterInfo testCharacter;
 
-    private Item testItemWithID;
+    private CharacterInfo testCharacterWithID;
 
     private long id;
 
-    private ItemDTO testItemDTO;
+    private CharacterDTO testCharacterDTO;
 
-    private ItemDTO mapToDTO(Item Item){
-        return this.mapper.map(Item, ItemDTO.class);
+    private CharacterDTO mapToDTO(CharacterInfo character){
+        return this.mapper.map(character, CharacterDTO.class);
     }
 
     @Before
     public void setUp(){
         this.repository.deleteAll();
-        this.testItem = new Item(1L, 4.0, "Potion of Lesser Healing:Use to recover health by 50", "consumable:1,currentHealth:50", "https://drive.google.com/uc?id=1eFd4Knyoi0klSudPerzqokqt_Dqfw3nm");
-        this.testItemWithID = this.repository.save(testItem);
-        this.id = testItemWithID.getItemId();
-        this.testItemDTO = this.mapToDTO(testItemWithID);
+        this.testCharacter = new CharacterInfo(100L, 0L, 1L, 100L);
+        this.testCharacterWithID = this.repository.save(testCharacter);
+        this.id = testCharacterWithID.getCharacterId();
+        this.testCharacterDTO = this.mapToDTO(testCharacterWithID);
     }
 
     @Test
-    public void getAllItemsTest() throws Exception {
-        List<ItemDTO> ItemDTOList = new ArrayList<>();
-        ItemDTOList.add(testItemDTO);
+    public void getAllCharactersTest() throws Exception {
+        List<CharacterDTO> CharacterDTOList = new ArrayList<>();
+        CharacterDTOList.add(testCharacterDTO);
         String content = this.mock.perform(
-            request(HttpMethod.GET, "/getAllItems")
+            request(HttpMethod.GET, "/getAllCharacters")
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()
             .getContentAsString();
-        assertEquals(content, this.objectMapper.writeValueAsString(ItemDTOList));
+        assertEquals(content, this.objectMapper.writeValueAsString(CharacterDTOList));
     }
 
     @Test
-    public void getItemByID() throws Exception {
+    public void getCharacterByID() throws Exception {
         String content = this.mock.perform(
-                request(HttpMethod.GET, "/getItemByID/" + this.id)
+                request(HttpMethod.GET, "/getCharacterByID/" + this.id)
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()
             .getContentAsString();
-        assertEquals(content, this.objectMapper.writeValueAsString(testItemDTO));
+        assertEquals(content, this.objectMapper.writeValueAsString(testCharacterDTO));
     }
 
     @Test
-    public void createItemTest() throws Exception {
+    public void createCharacterTest() throws Exception {
         String result = this.mock.perform(
-                request(HttpMethod.POST, "/createItem")
+                request(HttpMethod.POST, "/createCharacter")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(this.objectMapper.writeValueAsString(testItem))
+                .content(this.objectMapper.writeValueAsString(testCharacter))
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isCreated())
             .andReturn()
             .getResponse()
             .getContentAsString();
-        assertEquals(result, this.objectMapper.writeValueAsString(testItemDTO));
+        assertEquals(result, this.objectMapper.writeValueAsString(testCharacterDTO));
     }
 
     @Test
-    public void deleteItemTest() throws Exception {
+    public void deleteCharacterTest() throws Exception {
         this.mock.perform(
-                request(HttpMethod.DELETE, "/deleteItem/" + this.id)
+                request(HttpMethod.DELETE, "/deleteCharacter/" + this.id)
         ).andExpect(status().isNoContent());
     }
 }
