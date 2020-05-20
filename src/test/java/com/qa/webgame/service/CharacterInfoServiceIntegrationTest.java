@@ -63,10 +63,10 @@ public class CharacterInfoServiceIntegrationTest {
         assertThat(this.service.findCharacterById(this.testCharacterWithId.getCharacterId())).isEqualTo(this.mapToDTO(this.testCharacterWithId));
     }
 
-    @Test
-    public void deleteCharacterTest(){
-        assertThat(this.service.deleteCharacter(this.testCharacterWithId.getCharacterId())).isFalse();
-    }
+    // @Test
+    // public void deleteCharacterTest(){
+    //     assertThat(this.service.deleteCharacter(this.testCharacterWithId.getCharacterId())).isFalse();
+    // }
 
     @Test
     public void updateCharacterTest(){
