@@ -68,7 +68,7 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Project Links
 
-* [Porject presentation](https://drive.google.com/open?id=10YrSLOUWwms4jzRhlqcmePx5Ab60vuEKMU6bHRhdKPY)
+* [Project presentation](https://drive.google.com/open?id=10YrSLOUWwms4jzRhlqcmePx5Ab60vuEKMU6bHRhdKPY)
 * [Project ERD](https://drive.google.com/open?id=1YEaggmOUqyGyo12R1i-IjUMmLoWNiign)
 * [Project Risk Assessment](https://drive.google.com/open?id=112sqdOrziVAhgpah8ZigPt123q26Bdo2MYziQWCtGJM)
 * [MoSCoW User Stories](https://drive.google.com/open?id=1A7fEOvrUXrBWsmfw6Sm9boQLgnjpMNIvwWAqsGN95l0)
